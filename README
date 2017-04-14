@@ -1,0 +1,24 @@
+########################################
+# Iridium 9603N Solar Beacon Prototype #
+########################################
+
+A breadboard prototype for a Solar Powered Iridium 9603N Beacon.
+
+Power for the beacon is provided by a PowerFilm MPT3.6-150 solar panel.
+
+Power for the Iridium 9603N is provided by a Linear Technology LTC3225EDDB supercapacitor charger.
+
+See Iridium_9603N_Solar_Beacon_Prototype.pdf for a full description of the project:
+https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/Iridium_9603N_Solar_Beacon_Prototype.pdf
+
+The Arduino code can be found in Iridium9603NSolarBeaconPrototype
+https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/Iridium9603NSolarBeaconPrototype
+
+A Fritzing hook-up diagram can be found in Iridium_9603N_Solar_Beacon_Prototype_Fritzing.png
+https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/Iridium_9603N_Solar_Beacon_Prototype_Fritzing.png
+
+This project is distributed under a Creative Commons Attribution + Share-alike (BY-SA) licence.
+
+Enjoy!
+
+Paul
