@@ -12,14 +12,14 @@
 // capacitor charge time; gnss fix time; Iridium timeout; etc.
 // The default value will be overwritten with the one stored in Flash - if one exists
 // The value can be changed via a Mobile Terminated message
-int BEACON_INTERVAL = 5;
+int BEACON_INTERVAL = 15;
 
-// GPS / Iridium antenna switching is via a Skyworks AS179-92LF RF Switch
+// GNSS / Iridium antenna switching is via a Skyworks AS179-92LF RF Switch
 // Switching is performed by applying either EXT_PWR or 3V3SW to the AS179's V1 and V2 pins
 // EXT_PWR is the 5.2V power rail for the 9603N (switched via Q2 and Q3, enabled by pulling MISO/D22 high)
 // 3V3SW is the 3.3V power rail for the MAX-M8Q (switched via Q1, enabled by pulling D11 low)
 // Take great care to make sure EXT_PWR and 3V3SW are not enabled at the same time!
-// VERY BADS THINGS WILL PROBABLY HAPPEN IF YOU DO ENABLE BOTH SIMULTANEOUSLY!
+// BADS THINGS WILL PROBABLY HAPPEN IF YOU DO ENABLE BOTH SIMULTANEOUSLY!
 
 // Power for the 9603N is switched by a DMG3415 P-channel MOSFET
 // A 2N2222 NPN transistor pulls the MOSFET gate low
@@ -44,7 +44,7 @@ int BEACON_INTERVAL = 5;
 
 // The Iridium_9603_Beacon PCB is based extensively on the Adafruit Feather M0 (Adalogger)
 // https://www.adafruit.com/products/2796
-// GPS data provided by u-blox MAX-M8Q
+// GNSS data provided by u-blox MAX-M8Q
 // https://www.u-blox.com/en/product/max-m8-series
 
 // Uses RTCZero to provide sleep functionality (on the M0)
@@ -79,9 +79,9 @@ int BEACON_INTERVAL = 5;
 // A1 / D15 (Port B Pin 8) = LTC3225 PGOOD
 
 // MAX-M8Q GNSS is interfaced to M0 using Serial1
-// D1 (Port A Pin 10) = Serial1 TX : Connect to GPS RX
-// D0 (Port A Pin 11) = Serial1 RX : Connect to GPS TX
-// D11 (Port A Pin 16) = GPS ENable : Connect to GPS EN(ABLE)
+// D1 (Port A Pin 10) = Serial1 TX : Connect to GNSS RX
+// D0 (Port A Pin 11) = Serial1 RX : Connect to GNSS TX
+// D11 (Port A Pin 16) = GNSS ENable : Connect to GNSS EN(ABLE)
 
 // D13 (Port A Pin 17) = Red LED
 // D9 (Port A Pin 7) = AIN 7 : Bus Voltage / 2
@@ -143,31 +143,31 @@ HardwareSerial &ssIridium(Serial2);
 
 // Set Nav Mode to Portable
 static const uint8_t setNavPortable[] = {
-  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0xFF, 0xFF, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
+  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0x01, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
   0x05, 0x00, 0xFA, 0x00, 0xFA, 0x00, 0x64, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // Set Nav Mode to Pedestrian
 static const uint8_t setNavPedestrian[] = {
-  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0xFF, 0xFF, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
+  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0x01, 0x00, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
   0x05, 0x00, 0xFA, 0x00, 0xFA, 0x00, 0x64, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // Set Nav Mode to Automotive
 static const uint8_t setNavAutomotive[] = {
-  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0xFF, 0xFF, 0x04, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
+  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0x01, 0x00, 0x04, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
   0x05, 0x00, 0xFA, 0x00, 0xFA, 0x00, 0x64, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // Set Nav Mode to Sea
 static const uint8_t setNavSea[] = {
-  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0xFF, 0xFF, 0x05, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
+  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0x01, 0x00, 0x05, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
   0x05, 0x00, 0xFA, 0x00, 0xFA, 0x00, 0x64, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // Set Nav Mode to Airborne <1G
 static const uint8_t setNavAir[] = {
-  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0xFF, 0xFF, 0x06, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
+  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0x01, 0x00, 0x06, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 0x00, 0x00, 
   0x05, 0x00, 0xFA, 0x00, 0xFA, 0x00, 0x64, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
@@ -205,7 +205,7 @@ long iterationCounter = 0; // Increment each time a transmission is attempted
 static const int ledPin = 13; // Red LED on pin D13
 //#define NoLED // Uncomment this line to disable the LED
 
-static const int GPS_EN = 11; // GPS Enable on pin D11
+static const int GPS_EN = 11; // GNSS Enable on pin D11
 #define GPS_ON LOW
 #define GPS_OFF HIGH
 #define VAP A7 // Bus voltage analog pin (bus voltage divided by 2)
@@ -218,12 +218,11 @@ static const int GPS_EN = 11; // GPS Enable on pin D11
 #define init          0
 #define start_GPS     1
 #define read_GPS      2
-#define read_pressure 3
-#define start_LTC3225 4
-#define wait_LTC3225  5
-#define start_9603    6
-#define zzz           7
-#define wake          8
+#define start_LTC3225 3
+#define wait_LTC3225  4
+#define start_9603    5
+#define zzz           6
+#define wake          7
 
 // Variables used by Loop
 int year;
@@ -361,8 +360,8 @@ void setup()
   pinMode(Enable_9603N, OUTPUT); // 9603N enable via P-FET and NPN transistor
   digitalWrite(Enable_9603N, LOW); // Disable the 9603N
   
-  pinMode(GPS_EN, OUTPUT); // GPS & MPL3115A2 enable
-  digitalWrite(GPS_EN, GPS_OFF); // Disable the GPS and MPL3115A2
+  pinMode(GPS_EN, OUTPUT); // GNSS enable
+  digitalWrite(GPS_EN, GPS_OFF); // Disable the GNSS
   
   pinMode(IridiumSleepPin, OUTPUT); // The call to IridiumSBD should have done this - but just in case
   digitalWrite(IridiumSleepPin, LOW); // Disable the Iridium 9603
@@ -462,13 +461,13 @@ void loop()
       
     case start_GPS:
 
-      // Power up the GPS and MPL3115A2
-      Serial.println("Powering up the GPS...");
-      digitalWrite(GPS_EN, GPS_ON); // Enable the GPS
+      // Power up the GNSS
+      Serial.println("Powering up the GNSS...");
+      digitalWrite(GPS_EN, GPS_ON); // Enable the GNSS
 
       delay(2000); // Allow time for both to start
     
-      // Check battery voltage now we are drawing current for the GPS
+      // Check battery voltage now we are drawing current for the GNSS
       // If voltage is low, go to sleep
       get_vbat();
       if (vbat < VBAT_LOW) {
@@ -484,13 +483,13 @@ void loop()
       break;
 
     case read_GPS:
-      // Start the GPS serial port
+      // Start the GNSS serial port
       ssGPS.begin(9600);
 
       delay(1000); // Allow time for the port to open
 
-      // Configure GPS
-      Serial.println("Configuring GPS...");
+      // Configure GNSS
+      Serial.println("Configuring GNSS...");
 
       // Disable all messages except GGA and RMC
       ssGPS.println("$PUBX,40,GLL,0,0,0,0*5C"); // Disable GLL
@@ -521,13 +520,13 @@ void loop()
 
       while(ssGPS.available()){ssGPS.read();} // Flush RX buffer so we don't confuse TinyGPS with UBX acknowledgements
 
-      // Reset TinyGPS and begin listening to the GPS
-      Serial.println("Beginning to listen for GPS traffic...");
+      // Reset TinyGPS and begin listening to the GNSS
+      Serial.println("Beginning to listen for GNSS traffic...");
       fixFound = false; // Reset fixFound
       charsSeen = false; // Reset charsSeen
       tinygps = TinyGPS();
       
-      // Look for GPS signal for up to 5 minutes
+      // Look for GNSS signal for up to 5 minutes
       for (tnow = millis(); !fixFound && millis() - tnow < 5UL * 60UL * 1000UL;)
       {
         if (ssGPS.available())
@@ -553,13 +552,13 @@ void loop()
           }
         }
 
-        // if we haven't seen any GPS data in 10 seconds, then stop waiting
+        // if we haven't seen any GNSS data in 10 seconds, then stop waiting
         if (!charsSeen && millis() - tnow > 10000) {
           break;
         }
 
-        // Check battery voltage now we are drawing current for the GPS
-        // If voltage is low, stop looking for GPS and go to sleep
+        // Check battery voltage now we are drawing current for the GNSS
+        // If voltage is low, stop looking for GNSS and go to sleep
         get_vbat();
         if (vbat < VBAT_LOW) {
           break;
@@ -577,7 +576,7 @@ void loop()
 
       }
 
-      Serial.println(charsSeen ? fixFound ? F("A GPS fix was found!") : F("No GPS fix was found.") : F("Wiring error: No GPS data seen."));
+      Serial.println(charsSeen ? fixFound ? F("A GNSS fix was found!") : F("No GNSS fix was found.") : F("Wiring error: No GNSS data seen."));
       Serial.print("Latitude (degrees): "); Serial.println(latitude, 6);
       Serial.print("Longitude (degrees): "); Serial.println(longitude, 6);
       Serial.print("Altitude (m): "); Serial.println(altitude / 100); // Convert altitude from cm to m
@@ -589,13 +588,13 @@ void loop()
         loop_step = zzz;
       }
       else if (!charsSeen) {
-        Serial.println("***!!! No GPS data received !!!***");
+        Serial.println("***!!! No GNSS data received !!!***");
         loop_step = zzz;
       }
       else {
-        // Power down the GPS and MPL3115A2
-        Serial.println("Powering down the GPS and MPL3115A2...");
-        digitalWrite(GPS_EN, GPS_OFF); // Disable the GPS and MPL3115A2
+        // Power down the GNSS
+        Serial.println("Powering down the GNSS...");
+        digitalWrite(GPS_EN, GPS_OFF); // Disable the GPS
         loop_step = start_LTC3225;
       }
       
@@ -760,7 +759,7 @@ void loop()
     
         else
         {
-          // No GPS fix found!
+          // No GNSS fix found!
           if (RBDESTINATION > 0) {
             sprintf(outBuffer, "RB%07d,19700101000000,0.0,0.0,0,0.0,0,0.0,0,", RBDESTINATION);
           }
@@ -892,12 +891,12 @@ void loop()
       Serial.println("Putting 9603N and GNSS to sleep...");
       isbd.sleep(); // Put 9603 to sleep
       delay(1000);
-      ssIridium.end(); // Close GPS, Iridium and eRIC serial ports
+      ssIridium.end(); // Close GNSS, Iridium and eRIC serial ports
       ssGPS.end();
       delay(1000); // Wait for serial ports to clear
   
-      // Disable: GPS; pressure sensor; 9603N; and Iridium supercapacitor charger
-      digitalWrite(GPS_EN, GPS_OFF); // Disable the GPS (and MPL3115A2)
+      // Disable: GNSS; 9603N; and Iridium supercapacitor charger
+      digitalWrite(GPS_EN, GPS_OFF); // Disable the GPS
       digitalWrite(Enable_9603N, LOW); // Disable the 9603N
       digitalWrite(LTC3225shutdown, LOW); // Disable the LTC3225 supercapacitor charger
 
