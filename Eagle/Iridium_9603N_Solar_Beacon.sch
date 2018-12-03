@@ -10087,6 +10087,13 @@ and Element14's LTC Library</text>
 <label x="53.34" y="58.42" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
+<net name="SCL" class="0">
+<segment>
+<pinref part="J1" gate="G$1" pin="12"/>
+<wire x1="96.52" y1="38.1" x2="116.84" y2="38.1" width="0.1524" layer="91"/>
+<label x="116.84" y="38.1" size="1.27" layer="95" xref="yes"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
@@ -11386,7 +11393,6 @@ and Element14's LTC Library</text>
 <approved hash="106,2,101.6,78.74,D8,,,,,"/>
 <approved hash="106,2,25.4,48.26,MOSI,,,,,"/>
 <approved hash="106,2,25.4,45.72,SCK,,,,,"/>
-<approved hash="106,2,101.6,27.94,SCL,,,,,"/>
 <approved hash="106,2,101.6,30.48,SDA,,,,,"/>
 <approved hash="106,2,101.6,71.12,SD_CS,,,,,"/>
 <approved hash="113,2,198.964,19.7358,FRAME1,,,,,"/>

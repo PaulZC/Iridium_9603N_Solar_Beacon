@@ -59,9 +59,10 @@ int BEACON_INTERVAL = 15;
 // http://www.arduino.cc/en/Tutorial/Smoothing
 
 // Iridium 9603N is interfaced to M0 using Serial2
-// D6 (Port A Pin 20) = Enable (Sleep) : Connect to 9603 ON/OFF Pin 5
-// D10 (Port A Pin 18) = Serial2 TX : Connect to 9603 Pin 6
-// D12 (Port A Pin 19) = Serial2 RX : Connect to 9603 Pin 7
+// D6 (Port A Pin 20) = Enable (Sleep) : Connected to 9603 ON/OFF Pin 5
+// D10 (Port A Pin 18) = Serial2 TX : Connected to 9603 Pin 6
+// D12 (Port A Pin 19) = Serial2 RX : Connected to 9603 Pin 7
+// D21 (Port A Pin 23) = Ring Indicator: Connected to 9603 Pin 12
 
 // Power to the 9603N is switched by a P-channel MOSFET
 // The MOSFET gate is pulled high by a 10K resistor. The gate is pulled low by a 2N2222 NPN transistor
@@ -198,6 +199,7 @@ static const int LTC3225shutdown = 5; // LTC3225 ~Shutdown on pin D5
 static const int LTC3225PGOOD = 15; // LTC3225 PGOOD on pin A1 / D15
 static const int Enable_9603N = 22; // 9603N Enable (enables EXT_PWR via P-MOSFET)
 static const int IridiumSleepPin = 6; // Iridium Sleep connected to D6
+static const int RingIndicator = 21; // Iridium Ring Indicator connected to D21
 IridiumSBD isbd(ssIridium, IridiumSleepPin); // This should disable the 9603
 TinyGPS tinygps;
 long iterationCounter = 0; // Increment each time a transmission is attempted
@@ -365,6 +367,7 @@ void setup()
   
   pinMode(IridiumSleepPin, OUTPUT); // The call to IridiumSBD should have done this - but just in case
   digitalWrite(IridiumSleepPin, LOW); // Disable the Iridium 9603
+  pinMode(RingIndicator, INPUT_PULLUP); // 9603N Ring Indicator
 
   pinMode(ledPin, OUTPUT); // LED
   digitalWrite(ledPin, LOW); // Disable the LED
