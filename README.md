@@ -6,15 +6,16 @@ Suitable for high altitude ballooning, asset tracking and many other remote moni
 
 ![Iridium_9603N_Solar_Beacon_1](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_1.JPG)
 
-Powered by two [PowerFilm Solar MPT3.6-150 solar panels](https://www.powerfilmsolar.com/custom-solutions/electronic-component-solar-panels/electronic-component-solar-panels-product-page/mpt3-6-150)
-
-The Iridium 9603N and u-blox MAX-M8Q GNSS share a single antenna. Antenna switching is performed by a Skyworks AS179-92LF RF Switch.
-
-![Iridium_9603N_Solar_Beacon_2](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_2.JPG)
+The beacon can be powered by two [PowerFilm Solar MPT3.6-150 solar panels](https://www.powerfilmsolar.com/custom-solutions/electronic-component-solar-panels/electronic-component-solar-panels-product-page/mpt3-6-150).
+It can also be powered by USB becoming an extremely small Iridium dongle which you can use to track other beacons from anywhere.
 
 ![Iridium_9603N_Solar_Beacon_3](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_3.JPG)
 
-![Iridium_9603N_Solar_Beacon_4](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_4.JPG)
+The Iridium 9603N and u-blox MAX-M8Q GNSS share a single antenna. Antenna switching is performed by a Skyworks AS179-92LF RF Switch.
+
+**See [LEARN.md](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/LEARN.md) for more details.**
+
+**See [ASSEMBLY.md](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/ASSEMBLY.md) for details on how to assemble the PCB.**
 
 See [Iridium_9603N_Solar_Beacon.pdf](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/Iridium_9603N_Solar_Beacon.pdf) for the schematic, layout and Bill Of Materials.
 
@@ -22,7 +23,7 @@ The [Eagle](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/Eag
 
 The [Arduino](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/Arduino) directory contains the Arduino code.
 
-**Work in progress! Full details to follow soon.**
+The [OpenSCAD](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/OpenSCAD) directory contains the .stl and .scad files for the 3D-printed cover.
 
 This project is distributed under a Creative Commons Attribution + Share-alike (BY-SA) licence.
 Please refer to section 5 of the licence for the "Disclaimer of Warranties and Limitation of Liability".
