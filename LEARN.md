@@ -14,9 +14,9 @@ Suitable for high altitude ballooning, asset tracking and many other remote moni
 
 The Iridium 9603N Solar Beacon is a miniature version of the [Iridium_9603_Beacon](https://github.com/PaulZC/Iridium_9603_Beacon).
 It can be powered by two [PowerFilm Solar MPT3.6-150 solar panels](https://www.powerfilmsolar.com/custom-solutions/electronic-component-solar-panels/electronic-component-solar-panels-product-page/mpt3-6-150)
-but can also be powered by USB becoming an extremely small Iridium dongle which you can use to track other beacons without an Internet connection.
+but can also be powered via USB becoming an extremely small Iridium dongle which you can use to track other beacons without an Internet connection.
 
-![Iridium_9603N_Solar_Beacon_3](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_3.JPG)
+![Iridium_9603N_Solar_Beacon_5](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_5.JPG)
 
 ## The Design
 
@@ -54,7 +54,7 @@ Available from e.g. Farnell / Element14 (2460544)
 ### Linear Technology LTC3225EDDB SuperCapacitor Charger
 ![Learn_3.JPG](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Learn_3.JPG)
 
-- http://www.linear.com/product/LTC3225
+- https://www.analog.com/en/products/ltc3225.html
 
 Available as a bare chip from e.g. Farnell / Element14 (1715231)
 
@@ -113,7 +113,7 @@ When modifying the Arduino code, take great care to make sure EXT_PWR and 3V3SW 
 ### Two PowerFilm Solar MPT3.6-150 solar panels
 ![Iridium_9603N_Solar_Beacon_1.JPG](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_1.JPG)
 
-- http://www.powerfilmsolar.com/products/?mpt36150&show=product&productID=271537&productCategoryIDs=6573
+- https://www.powerfilmsolar.com/custom-solutions/electronic-component-solar-panels/electronic-component-solar-panels-product-page/mpt3-6-150
 
 Available (in the UK) from e.g.:
 - http://www.selectsolar.co.uk/prod/264/powerfilm-mpt36150-100ma-36v-mini-solar-panel
@@ -147,7 +147,7 @@ The LTC3225 super capacitor charger draws a lower current from the panels to slo
 The datasheet for the 9603N quotes: an average idle current of 34mA; and an average receive current of 39mA.
 
 For solar operation, we need to charge the capacitors at a higher current than 39mA, but keep the total current draw within what the solar panels can deliver.
-(Remember that the LTC3225 draws approximately _twice_ the chosen charge current.)
+(The LTC3225 has an efficiency of approximately 50% and hence draws approximately _twice_ the chosen charge current.)
 The 10F capacitors provide the majority of the higher current draw during the transmit cycle.
 
 For USB operation the super capacitor charge current can be set to 150mA and smaller (1F) super capacitors are adequate.
@@ -161,12 +161,6 @@ Take a short male to female USB extension cable; carefully strip the outer sheat
 prise apart the screen connection to reveal the four USB wires (red (5V); black (GND); green and white (data)); cut and insulate the ends of the red 5V wire leaving the black, green and white wires and the screen connection intact:
 
 ![USB_Power_Break.JPG](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/USB_Power_Break.JPG)
-
-## Do you recommend coating the board once it is populated?
-As a minimum, I’d recommend applying a coat of acrylic protective lacquer to the processor and surrounding components (especially the crystal).
-If you’re using an aerosol, be careful to mask off the connectors and switch first.
-
-![Assembly_14.JPG](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Assembly_14.JPG)
 
 ## Arduino Code
 The [Arduino](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/Arduino) directory contains the Arduino code.
@@ -256,9 +250,7 @@ The code uses Cristian Maglie's FlashStorage library to store and retrieve the B
 You will also need:
 - https://github.com/mikalhart/TinyGPS
 - http://arduiniana.org/libraries/pstring/
-- https://github.com/adafruit/Adafruit_MPL3115A2_Library
 - https://github.com/arduino-libraries/RTCZero
-- https://github.com/adafruit/Adafruit_NeoPixel
 
 ## What data will I get back from the beacon?
 

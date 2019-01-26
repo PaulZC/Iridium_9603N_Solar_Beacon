@@ -53,7 +53,7 @@ tin-lead solder instead of lead-free.
 Position the components onto the blobs of solder paste using tweezers. A magnifier lamp or a USB microscope will
 help you place the components in the correct position. J1 - the 20-way Samtec connector - is probably the trickiest
 component to position. Take extra time to make sure the legs are centered accurately on the pads.
-You may find [SMT_Component_Placer](https://github.com/PaulZC/SMT_Component_Placer) useful.
+You may find the [SMT_Component_Placer](https://github.com/PaulZC/SMT_Component_Placer) useful.
 
 ![Assembly_7](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Assembly_7.JPG)
 

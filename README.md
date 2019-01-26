@@ -7,9 +7,9 @@ Suitable for high altitude ballooning, asset tracking and many other remote moni
 ![Iridium_9603N_Solar_Beacon_1](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_1.JPG)
 
 The beacon can be powered by two [PowerFilm Solar MPT3.6-150 solar panels](https://www.powerfilmsolar.com/custom-solutions/electronic-component-solar-panels/electronic-component-solar-panels-product-page/mpt3-6-150).
-It can also be powered by USB becoming an extremely small Iridium dongle which you can use to track other beacons from anywhere.
+It can also be powered via USB becoming an extremely small Iridium dongle which you can use to track other beacons from anywhere.
 
-![Iridium_9603N_Solar_Beacon_3](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_3.JPG)
+![Iridium_9603N_Solar_Beacon_5](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_5.JPG)
 
 The Iridium 9603N and u-blox MAX-M8Q GNSS share a single antenna. Antenna switching is performed by a Skyworks AS179-92LF RF Switch.
 
