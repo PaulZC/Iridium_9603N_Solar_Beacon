@@ -14,7 +14,7 @@ Suitable for high altitude ballooning, asset tracking and many other remote moni
 
 The Iridium 9603N Solar Beacon is a miniature version of the [Iridium_9603_Beacon](https://github.com/PaulZC/Iridium_9603_Beacon).
 It can be powered by two [PowerFilm Solar MPT3.6-150 solar panels](https://www.powerfilmsolar.com/custom-solutions/electronic-component-solar-panels/electronic-component-solar-panels-product-page/mpt3-6-150)
-but can also be powered via USB becoming an extremely small Iridium dongle which you can use to track other beacons without an Internet connection.
+but can also be powered via USB becoming an extremely small Iridium Beacon Base which you can use to track other beacons without an Internet connection.
 
 ![Iridium_9603N_Solar_Beacon_5](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Iridium_9603N_Solar_Beacon_5.JPG)
 
@@ -295,6 +295,16 @@ E.g.:
 You can adapt the code to send whatever data you like, up to a maximum of 340 bytes. The message is sent as plain text, but you could encrypt it if required.
 
 You can opt to receive the data via HTTP instead of email. Your service provider will provide further details.
+
+## Does the Solar Beacon work in exactly the same way as the Iridium 9603 Beacon?
+
+Yes, with the exception that the solar beacon does not have an MPL3115A2 pressure and temperature sensor. The messages produced by the solar beacon have the same
+format as messages from its big brother; the pressure and temperature data is simply set to zero.
+
+You can track the solar beacon from another solar beacon acting as a Base in exactly the same way as you can with the Iridium Beacon. Please refer to the
+main [Iridium_9603_Beacon Repo](https://github.com/PaulZC/Iridium_9603_Beacon/blob/master/RockBLOCK.md) for full details. Please make sure you use the version of
+the Base code included in this Repo as the solar beacon pin definitions are slightly different and the code needs to ensure the 9603N and MAX-M8Q are not
+powered up simultaneously when sharing the antenna.
 
 ## Acknowledgements
 

@@ -1,4 +1,4 @@
-// Simple Cover for the Iridium Beacon with USB opening
+// Simple Cover for the Iridium Solar Beacon with USB opening
 
 $fn=50; // fragments
 wall = 2.0; // wall thickness
@@ -16,7 +16,7 @@ usb_height = 1.0; // thickness of the opening for the USB connector
 usb_recess_r = 4.0; // radius of the recess for the USB connector body
 usb_recess_width = 12.0; // total width of the recess for the USB connector body
 usb_x_offset = -4.0; // X offset of the USB connector
-usb_y_offset = 3.25; // y offset of the USB connector
+usb_y_offset = 2.25; // y offset of the USB connector
 
 height = internal_height + end_wall + lid_insert; // cover external height (Z)
 width = internal_width + (2 * wall); // cover external width (X)

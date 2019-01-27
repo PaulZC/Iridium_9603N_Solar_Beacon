@@ -1,17 +1,17 @@
-// Simple Lid for the Iridium Beacon Cover without Radio Board
+// Simple Lid for the Iridium Solar Beacon Cover
 
 $fn=50; // fragments
-wall = 2; // cover wall thickness
-thickness = 2; // lid end thickness
-internal_width = 42; // internal width (X) of the cover
+wall = 2.0; // cover wall thickness
+thickness = 2.0; // lid end thickness
+internal_width = 42.0; // internal width (X) of the cover
 internal_depth = 23.5; // internal depth (Y) of the cover
 gap = 0.3; // clearance gap (per side)
-insert_height = 3; // extra height for the lid insert
+insert_height = 3.0; // extra height for the lid insert
 internal_corner_radius = 1.0; // radius of the internal corner cylinder
 
 sma_r = 3.75; // radius of the hole for the sma connector
 sma_x_offset = 1.5; // X offset of the hole for the sma connector w.r.t. the X center of the void
-sma_y_offset = 2.25; // y offset of the hole for the sma connector w.r.t. the Y center of the void
+sma_y_offset = 0.75; // y offset of the hole for the sma connector w.r.t. the Y center of the void
 sma_wall_thickness = 3.0; // wall thickness around the SMA connectors
 
 if (gap > internal_corner_radius) echo("Error! Gap cannot be greater than the internal corner radius!");
