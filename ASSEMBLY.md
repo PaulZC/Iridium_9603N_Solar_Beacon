@@ -160,6 +160,38 @@ Keep the top of the MAX-M8Q clear of lacquer too as its package is only just thi
 
 Once the lacquer is dry, re-attach the 9603N and your board is ready for use.
 
+### Assemble and attach the solar panels
+
+The [Eagle](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/Eagle) directory contains the schematic and pcb design file for
+the Solar Panel Support.
+
+Solder two MBR120 diodes onto the PCB pads. In this photo the diode cathodes point down.
+
+![Solar_Panel_1](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_1.JPG)
+
+Cut six pieces of double sided foam tape and stick them onto the PCB fingers. I recommend using good quality acrylic adhesive tape,
+e.g. 3M VHB Tape 4941P.
+
+![Solar_Panel_2](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_2.JPG)
+
+Stick the two solar panels to the foam tape, paying close attention to the panel orientation. In this photo both panels are oriented so the minus
+connections are at the bottom.
+
+![Solar_Panel_3](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_3.JPG)
+
+Take four header pins and bend one end of each through 90 degrees. Solder these in position, applying solder to both sides of the PCB for added
+strength.
+
+![Solar_Panel_4](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_4.JPG)
+
+Solder the pins to the panels; apply heat and flow solder onto each pin until the top plastic coat on the panel melts and the solder flows onto the
+electrode beneath. Take care not to apply excessive heat or you may damage the panel.
+
+![Solar_Panel_5](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_5.JPG)
+
+Pass the beacon SMA connector through the hole in the center of the solar panel support. Use two more 90 degree header pins to link the two, soldering
+the pins to both beacon and solar panel PCBs.
+
 ### The Small Print
 
 This project is distributed under a Creative Commons Attribution + Share-alike (BY-SA) licence.
