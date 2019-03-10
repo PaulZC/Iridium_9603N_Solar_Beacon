@@ -189,8 +189,20 @@ electrode beneath. Take care not to apply excessive heat or you may damage the p
 
 ![Solar_Panel_5](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_5.JPG)
 
-Pass the beacon SMA connector through the hole in the center of the solar panel support. Use two more 90 degree header pins to link the two, soldering
-the pins to both beacon and solar panel PCBs.
+Solder two more 90 degree header pins through the + and - pads on the beacon PCB such that the pins point parallel to the SMA connector.
+Applying solder to both sides of the PCB for added strength.
+
+![Solar_Panel_6](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_6.JPG)
+
+Pass the SMA connector through the hole in the center of the solar panel support and locate the two pins through the matching pads.
+Place a 3D-printed antenna spacer over the SMA connector and screw the antenna into position, taking care not to bend the pins.
+Finally, solder the pins to the solar panel support applying solder to both sides of the PCB for added strength.
+
+![Solar_Panel_7](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_7.JPG)
+
+The [OpenSCAD](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/OpenSCAD) directory contains the .stl and .scad files for the
+antenna spacer. The spacer is the correct thickness for a 1.55mm solar panel support. You will need to edit the .scad file to produce a spacer
+for (e.g.) a 1.0mm solar panel support.
 
 ### The Small Print
 

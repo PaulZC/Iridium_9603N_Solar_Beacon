@@ -23,7 +23,7 @@ The [Eagle](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/Eag
 
 The [Arduino](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/Arduino) directory contains the Arduino code.
 
-The [OpenSCAD](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/OpenSCAD) directory contains the .stl and .scad files for the 3D-printed cover.
+The [OpenSCAD](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/tree/master/OpenSCAD) directory contains the .stl and .scad files for the 3D-printed cover and antenna spacer.
 
 Please refer to the [Iridium_9603_Beacon Repo](https://github.com/PaulZC/Iridium_9603_Beacon/blob/master/RockBLOCK.md) for details on how to track your beacon
 via the RockBLOCK Gateway with or without an Internet connection. If you are configuring the Solar Beacon as a Base, please make sure you use the version of
