@@ -188,8 +188,6 @@ Get yourself a Segger J-Link programmer and connect it according to [Atmel_SAMD2
 
 ![Assembly_12](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Assembly_12.JPG)
 
-Ignore the RST connection.
-
 Connect the 5V-Supply output from the J-Link to the + pad to power the board while you configure it (it doesn’t need external power for this bit).
 
 Follow Lady Ada’s excellent instructions:

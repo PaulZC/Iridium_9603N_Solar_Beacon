@@ -190,7 +190,7 @@ electrode beneath. Take care not to apply excessive heat or you may damage the p
 ![Solar_Panel_5](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_5.JPG)
 
 Solder two more 90 degree header pins through the + and - pads on the beacon PCB such that the pins point parallel to the SMA connector.
-Applying solder to both sides of the PCB for added strength.
+Apply solder to both sides of the PCB for added strength.
 
 ![Solar_Panel_6](https://github.com/PaulZC/Iridium_9603N_Solar_Beacon/blob/master/img/Solar_Panel_6.JPG)
 
