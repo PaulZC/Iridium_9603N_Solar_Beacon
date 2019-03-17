@@ -12,11 +12,11 @@
 // capacitor charge time; gnss fix time; Iridium timeout; etc.
 // The default value will be overwritten with the one stored in Flash - if one exists
 // The value can be changed via a Mobile Terminated message
-int BEACON_INTERVAL = 15;
+int BEACON_INTERVAL = 5;
 
 // GNSS / Iridium antenna switching is via a Skyworks AS179-92LF RF Switch
 // Switching is performed by applying either EXT_PWR or 3V3SW to the AS179's V1 and V2 pins
-// EXT_PWR is the 5.2V power rail for the 9603N (switched via Q2 and Q3, enabled by pulling MISO/D22 high)
+// EXT_PWR is the 5.3V power rail for the 9603N (switched via Q2 and Q3, enabled by pulling MISO/D22 high)
 // 3V3SW is the 3.3V power rail for the MAX-M8Q (switched via Q1, enabled by pulling D11 low)
 // Take great care to make sure EXT_PWR and 3V3SW are not enabled at the same time!
 // BADS THINGS WILL PROBABLY HAPPEN IF YOU DO ENABLE BOTH SIMULTANEOUSLY!
@@ -214,7 +214,7 @@ static const int GPS_EN = 11; // GNSS Enable on pin D11
 #define VREF A0 // 1.25V precision voltage reference
 #define VBUS_NORM 3.3 // Normal bus voltage for battery voltage calculations
 #define VREF_NORM 1.25 // Normal reference voltage for battery voltage calculations
-#define VBAT_LOW 3.05 // Minimum voltage for LTC3225
+#define VBAT_LOW 2.6 // Minimum voltage for LTC3225 (should really be 2.8V!)
 
 // Loop Steps
 #define init          0
@@ -243,6 +243,7 @@ float vbat = 5.3;
 float vref = VREF_NORM;
 float vrail = VBUS_NORM;
 int PGOOD;
+int pgood_count;
 unsigned long tnow;
 
 // Storage for the average voltage during Iridium callbacks
@@ -258,7 +259,7 @@ bool ISBDCallback()
 {
 #ifndef NoLED
   // 'Flash' the LED
-  if ((millis() / 1000) % 2 == 1) {
+  if ((millis() / 333) % 2 == 1) {
     digitalWrite(ledPin, HIGH);
   }
   else {
@@ -268,27 +269,8 @@ bool ISBDCallback()
 
   // Check the 'battery' voltage now we are drawing current for the 9603
   // If voltage is low, stop Iridium send
-  // Average voltage over numReadings to smooth out any short dips
+  get_vbat_smooth();
 
-  // Measure the reference voltage and calculate the rail voltage
-  vref = analogRead(VREF) * (VBUS_NORM / 1023.0);
-  vrail = VREF_NORM * VBUS_NORM / vref;
-
-  // subtract the last reading:
-  total = total - readings[readIndex];
-  // read from the sensor:
-  latest_reading = analogRead(VAP);
-  readings[readIndex] = latest_reading;
-  // add the reading to the total:
-  total = total + latest_reading;
-  // advance to the next position in the array:
-  readIndex = readIndex + 1;
-  // if we're at the end of the array...wrap around to the beginning:
-  if (readIndex >= numReadings) readIndex = 0;
-  // calculate the average:
-  average_reading = total / numReadings; // Seems to work OK with integer maths - but total does need to be long int
-  vbat = float(average_reading) * (2.0 * vrail / 1023.0); // Calculate average battery voltage using corrected rail voltage
-  
   if (vbat < VBAT_LOW) {
     Serial.print("***!!! LOW VOLTAGE (ISBDCallback) ");
     Serial.print(vbat,2);
@@ -298,6 +280,8 @@ bool ISBDCallback()
   else {     
     return true;
   }
+
+  delay(1);
 }
 // V2 console and diagnostic callbacks (replacing attachConsole and attachDiags)
 void ISBDConsoleCallback(IridiumSBD *device, char c) { Serial.write(c); }
@@ -325,13 +309,49 @@ void alarmMatch()
   rtc.setAlarmHours(rtc_hours); // Set next alarm time (hours)
 }
 
-// Read 'battery' voltage
+// Read and smooth the 'battery' voltage
+// Average voltage over numReadings to smooth out any short dips
+void get_vbat_smooth() {
+  // Measure the reference voltage and calculate the rail voltage
+  vref = analogRead(VREF) * (VBUS_NORM / 1023.0);
+  vrail = VREF_NORM * VBUS_NORM / vref;
+
+  // subtract the last reading:
+  total = total - readings[readIndex];
+  // read from the sensor:
+  latest_reading = analogRead(VAP);
+  readings[readIndex] = latest_reading;
+  // add the reading to the total:
+  total = total + latest_reading;
+  // advance to the next position in the array:
+  readIndex = readIndex + 1;
+  // if we're at the end of the array...wrap around to the beginning:
+  if (readIndex >= numReadings) readIndex = 0;
+  // calculate the average:
+  average_reading = total / numReadings; // Seems to work OK with integer maths - but total does need to be long int
+  vbat = float(average_reading) * (2.0 * vrail / 1023.0); // Calculate average battery voltage using corrected rail voltage
+}
+
+// Read the instantaneous 'battery' voltage
 void get_vbat() {
   // Measure the reference voltage and calculate the rail voltage
   vref = analogRead(VREF) * (VBUS_NORM / 1023.0);
   vrail = VREF_NORM * VBUS_NORM / vref;
 
   vbat = analogRead(VAP) * (2.0 * vrail / 1023.0); // Read 'battery' voltage from resistor divider, correcting for vrail
+}
+
+// Initialise the smoothed 'battery' voltage
+void init_vbat()
+{
+  // Initialise voltage sample buffer with current readings
+  total = 0;
+  for (int thisReading = 0; thisReading < numReadings; thisReading++) {
+    readings[thisReading] = analogRead(VAP);
+    total = total + readings[thisReading];
+    delay(1);
+  }
+  get_vbat_smooth();
 }
 
 // Send message in u-blox UBX format
@@ -403,13 +423,6 @@ void setup()
   
   iterationCounter = 0; // Make sure iterationCounter is set to zero (indicating a reset)
   loop_step = init; // Make sure loop_step is set to init
-
-  // Initialise voltage sample buffer to 5.3V
-  for (int thisReading = 0; thisReading < numReadings; thisReading++) {
-    readings[thisReading] = 822; // 5.3V * 1023 / (2 * 3.3)
-  }
-  total = numReadings * 822;
-  vbat = 5.3;
 }
 
 void loop()
@@ -447,9 +460,9 @@ void loop()
       isbd.setPowerProfile(IridiumSBD::USB_POWER_PROFILE); // Change power profile to "low current"
       isbd.useMSSTMWorkaround(false); // Redundant?
 
-      // Check battery voltage
+      // Check the 'battery' voltage
       // If voltage is low, go to sleep
-      get_vbat();
+      init_vbat(); // Use init_vbat to make sure the current true smoothed voltage is used (after coming out of deep sleep)
       if (vbat < VBAT_LOW) {
         Serial.print("***!!! LOW VOLTAGE (init) ");
         Serial.print(vbat,2);
@@ -472,7 +485,7 @@ void loop()
     
       // Check battery voltage now we are drawing current for the GNSS
       // If voltage is low, go to sleep
-      get_vbat();
+      init_vbat(); // Use init_vbat to make sure the true smoothed voltage is used
       if (vbat < VBAT_LOW) {
         Serial.print("***!!! LOW VOLTAGE (start_GPS) ");
         Serial.print(vbat,2);
@@ -562,7 +575,7 @@ void loop()
 
         // Check battery voltage now we are drawing current for the GNSS
         // If voltage is low, stop looking for GNSS and go to sleep
-        get_vbat();
+        get_vbat_smooth();
         if (vbat < VBAT_LOW) {
           break;
         }
@@ -614,24 +627,25 @@ void loop()
       Serial.println("Waiting for PGOOD to go HIGH...");
       digitalWrite(LTC3225shutdown, HIGH); // Enable the LTC3225EDDB supercapacitor charger
       delay(1000); // Let PGOOD stabilise
+      init_vbat(); // init_vbat to make sure the current true smoothed voltage is used now that the LTC3225 is active
       
       // Allow 10 mins for LTC3225 to achieve PGOOD
       PGOOD = digitalRead(LTC3225PGOOD);
-      for (tnow = millis(); !PGOOD && millis() - tnow < 10UL * 60UL * 1000UL;)
+      for (tnow = millis(); !PGOOD && ((millis() - tnow) < 10UL * 60UL * 1000UL);)
       {
 #ifndef NoLED
-      // 'Flash' the LED
-      if ((millis() / 1000) % 2 == 1) {
-        digitalWrite(ledPin, HIGH);
-      }
-      else {
-        digitalWrite(ledPin, LOW);
-      }
+        // 'Flash' the LED
+        if ((millis() / 500) % 2 == 1) {
+          digitalWrite(ledPin, HIGH);
+        }
+        else {
+          digitalWrite(ledPin, LOW);
+        }
 #endif
 
         // Check battery voltage now we are drawing current for the LTC3225
         // If voltage is low, stop LTC3225 and go to sleep
-        get_vbat();
+        get_vbat_smooth();
         if (vbat < VBAT_LOW) {
           break;
         }
@@ -663,27 +677,36 @@ void loop()
       Serial.println("Allowing extra time to make sure capacitors are charged...");
       
       // Allow 20s for extra charging
-      PGOOD = digitalRead(LTC3225PGOOD);
-      for (tnow = millis(); PGOOD && millis() - tnow < 1UL * 20UL * 1000UL;)
+      // Exit the loop early if PGOOD has been low for 2000 consecutive milliseconds
+      pgood_count = 2000;
+      for (tnow = millis(); (pgood_count > 0) && ((millis() - tnow) < (1UL * 20UL * 1000UL));)
       {
 #ifndef NoLED
-      // 'Flash' the LED
-      if ((millis() / 1000) % 2 == 1) {
-        digitalWrite(ledPin, HIGH);
-      }
-      else {
-        digitalWrite(ledPin, LOW);
-      }
+        // 'Flash' the LED
+        if ((millis() / 500) % 2 == 1) {
+          digitalWrite(ledPin, HIGH);
+        }
+        else {
+          digitalWrite(ledPin, LOW);
+        }
 #endif
 
         // Check battery voltage now we are drawing current for the LTC3225
         // If voltage is low, stop LTC3225 and go to sleep
-        get_vbat();
+        get_vbat_smooth();
         if (vbat < VBAT_LOW) {
           break;
         }
 
         PGOOD = digitalRead(LTC3225PGOOD);
+        if (PGOOD == LOW) {
+          pgood_count--;
+        }
+        else {
+          pgood_count = 2000;
+        }
+
+        delay(1);
       }
 
       // If voltage is low or supercapacitors did not charge then go to sleep
@@ -693,7 +716,7 @@ void loop()
         Serial.println("V !!!***");
         loop_step = zzz;
       }
-      else if (PGOOD == LOW) {
+      else if (pgood_count == 0) {
         Serial.println("***!!! LTC3225 !PGOOD (wait_LTC3225) !!!***");
         loop_step = zzz;
       }
@@ -789,6 +812,7 @@ void loop()
         Serial.println("'");
         uint8_t mt_buffer[100]; // Buffer to store Mobile Terminated SBD message
         size_t mtBufferSize = sizeof(mt_buffer); // Size of MT buffer
+        init_vbat(); // init_vbat to make sure the current true smoothed voltage is used now that the 9603N is active
 
         if (isbd.sendReceiveSBDText(outBuffer, mt_buffer, mtBufferSize) == ISBD_SUCCESS) { // Send the message; download an MT message if there is one
           if (mtBufferSize > 0) { // Was an MT message received?
@@ -880,6 +904,17 @@ void loop()
               flashVarsMem.write(flashVars); // Write the flash variables
             }
           }
+
+#ifndef NoLED
+          // Give the LED ~ten short flashes to indicate successful transmission
+          for (int flashCount = 0; flashCount < 11; flashCount++)
+          {
+            digitalWrite(ledPin, LOW);
+            delay(100);
+            digitalWrite(ledPin, HIGH);
+            delay(100);
+          }
+#endif
         }
         ++iterationCounter; // Increment iterationCounter (regardless of whether send was successful)
       }
