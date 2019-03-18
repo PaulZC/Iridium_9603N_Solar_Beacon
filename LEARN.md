@@ -139,8 +139,18 @@ during a flight. So, a P-MOSFET (Q3) is used as a switch to disconnect the power
 
 **3V3** is the 3.3V power rail from the SPX3819-3.3 voltage regulator.
 
+## Why does the beacon LED flash?
+The small red LED indicates what the beacon software is doing. The LED:
+
+- will flash at 0.5Hz (1 second on, 1 second off) while the u-blox GNSS is establishing a fix
+- will flash at 1Hz (0.5 seconds on, 0.5 seconds off) while the supercapacitors are charging
+- will flash at 1.5Hz (0.333 seconds on, 0.333 seconds off) during the Iridium Short Burst Data exchange
+- will flash rapidly (5Hz) ten times if the SBD exchange was successful
+- goes out when the beacon is in deep sleep
+- will fade up and down when the SAMD processor is in bootloader mode (the same as the Arduino Zero)
+
 ## Why do you need the Super Capacitors?
-The Iridium 9603 module draws an average current of 145mA and a peak current of 1.3A when transmitting its short data bursts. That’s too much for the solar panels to provide.
+The Iridium 9603 module draws an average current of 145mA and a peak current of 1.3A when transmitting its short data bursts. That's too much for the solar panels to provide.
 The LTC3225 super capacitor charger draws a lower current from the panels to slowly charge two 2.7V capacitors, connected in series, to 5.3V. The capacitors then deliver the 1.3A to the module when it sends the data burst.
 
 ## Why is the Super Capacitor Charger charge current set to 60mA?
