@@ -30,6 +30,13 @@ via the RockBLOCK Gateway with or without an Internet connection. If you are con
 the Base code included in this Repo as the solar beacon pin definitions are slightly different and the code needs to ensure the 9603N and MAX-M8Q are not
 powered up simultaneously when sharing the antenna.
 
+If you have found this project useful and if you are able to, please cite the paper:
+
+P. Clark et al, An open source toolkit for the tracking, termination and recovery of high altitude balloon flights and payloads, 2019 JINST 14 P04003
+[DOI:10.1088/1748-0221/14/04/P04003](https://doi.org/10.1088/1748-0221/14/04/P04003)
+
+The Accepted Manuscript is available on arXiv: http://arxiv.org/abs/1904.04321
+
 This project is distributed under a Creative Commons Attribution + Share-alike (BY-SA) licence.
 Please refer to section 5 of the licence for the "Disclaimer of Warranties and Limitation of Liability".
 
